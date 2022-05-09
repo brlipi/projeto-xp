@@ -28,7 +28,7 @@ namespace projeto_xp.Controllers
             return await _context.UserItems.ToListAsync();
         }
 
-        // GET: Users/5
+        // GET: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         [HttpGet("{id}")]
         public async Task<ActionResult<UserItem>> GetUserItem(string id)
         {
@@ -42,7 +42,7 @@ namespace projeto_xp.Controllers
             return userItem;
         }
 
-        // PUT: Users/5
+        // PUT: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserItem(string id, UserItem userItem)
@@ -54,7 +54,10 @@ namespace projeto_xp.Controllers
             }
 
             ctxUserItem.Name = userItem.Name;
-            ctxUserItem.Surname = userItem.Surname;
+            if(userItem.Surname != null)
+            {
+                ctxUserItem.Surname = userItem.Surname;
+            }
             ctxUserItem.Age = userItem.Age;
 
             try
@@ -83,6 +86,11 @@ namespace projeto_xp.Controllers
         {
             userItem.CreationDate = DateTime.Now;
             userItem.Id = Guid.NewGuid().ToString();
+            if (userItem.Surname == null)
+            {
+                userItem.Surname = "";
+            }
+
             _context.UserItems.Add(userItem);
             try
             {
@@ -103,7 +111,7 @@ namespace projeto_xp.Controllers
             return CreatedAtAction(nameof(GetUserItem), new { id = userItem.Id }, userItem);
         }
 
-        // DELETE: Users/5
+        // DELETE: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserItem(string id)
         {
