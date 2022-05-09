@@ -23,14 +23,14 @@ namespace projeto_xp.Controllers
 
         // GET: Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserItem>>> GetUserItems()
+        public async Task<ActionResult<IEnumerable<UserItemCreate>>> GetUserItems()
         {
             return await _context.UserItems.ToListAsync();
         }
 
         // GET: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserItem>> GetUserItem(string id)
+        public async Task<ActionResult<UserItemCreate>> GetUserItem(string id)
         {
             var userItem = await _context.UserItems.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace projeto_xp.Controllers
         // PUT: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserItem(string id, UserItem userItem)
+        public async Task<IActionResult> PutUserItem(string id, UserItemUpdate userItem)
         {
             var ctxUserItem = await _context.UserItems.FindAsync(id);
             if (ctxUserItem == null)
@@ -53,12 +53,18 @@ namespace projeto_xp.Controllers
                 return BadRequest();
             }
 
-            ctxUserItem.Name = userItem.Name;
+            if(userItem.Name != null)
+            {
+                ctxUserItem.Name = userItem.Name;
+            }
             if(userItem.Surname != null)
             {
                 ctxUserItem.Surname = userItem.Surname;
             }
-            ctxUserItem.Age = userItem.Age;
+            if(userItem.Age != null)
+            {
+                ctxUserItem.Age = userItem.Age;
+            }
 
             try
             {
@@ -82,7 +88,7 @@ namespace projeto_xp.Controllers
         // POST: Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserItem>> PostUserItem(UserItem userItem)
+        public async Task<ActionResult<UserItemCreate>> PostUserItem(UserItemCreate userItem)
         {
             userItem.CreationDate = DateTime.Now;
             userItem.Id = Guid.NewGuid().ToString();

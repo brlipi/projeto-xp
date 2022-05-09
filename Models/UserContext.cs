@@ -5,6 +5,6 @@ namespace projeto_xp.Models
     public class UserContext : DbContext
     {
         public UserContext(DbContextOptions<UserContext> options) : base(options) { }
-        public DbSet<UserItem> UserItems { get; set; } = null;
+        public DbSet<UserItemCreate> UserItems { get; set; } = null;
     }
 }
