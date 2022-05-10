@@ -1,10 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using projeto_xp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 builder.Services.AddControllers();
 /*builder.Services.AddDbContext<UserContext>(opt =>
     opt.UseInMemoryDatabase("Users"));*/
