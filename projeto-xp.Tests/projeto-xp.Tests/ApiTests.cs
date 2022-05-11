@@ -2,7 +2,7 @@ using Xunit;
 
 namespace projeto_xp.Tests
 {
-    public class UnitTest1
+    public class ApiTests
     {
         [Fact]
         public void Test1()
