@@ -12,9 +12,8 @@ var logger = new LoggerConfiguration()
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
 builder.Services.AddControllers();
-/*builder.Services.AddDbContext<UserContext>(opt =>
-    opt.UseInMemoryDatabase("Users"));*/
 builder.Services.AddDbContext<UserContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
