@@ -12,12 +12,23 @@ namespace projeto_xp.Models
             _context = context;
         }
         public UserItemCreate GetUserItemById(string id)
-            => _context.UserItems.FirstOrDefault(x => x.Id == id);
+        {
+            return _context.UserItems.FirstOrDefault(x => x.Id == id);
+        }
+
         public IEnumerable<UserItemCreate> GetAllUserItems()
-            => _context.UserItems;
+        {
+            return _context.UserItems;
+        }
+
         public void AddUser(UserItemCreate userItem)
-            => _context.UserItems.Add(userItem);
+        {
+            _context.UserItems.Add(userItem);
+        }
+
         public void SaveChanges()
-            => _context.SaveChanges();
+        {
+            _context.SaveChanges();
+        }
     }
 }
