@@ -5,7 +5,8 @@ namespace projeto_xp.Models
     public class UserItemCreate
     {
         private DateTime creationDate;
-        public string Name { get; set; }
+        [Required]
+        public string? Name { get; set; }
         public string? Surname { get; set; }
         [Required]
         public ushort? Age { get; set; }

@@ -4,10 +4,11 @@ namespace projeto_xp.Models
 {
     public interface IUserRepository
     {
-        UserItemCreate GetUserItemById(string id);
-        IEnumerable<UserItemCreate> GetAllUserItems();
-        void AddUser(UserItemCreate userItem);
-        //void UpdateUser(UserItemUpdate userItem);
-        void SaveChanges();
+        Task<List<UserItemCreate>> GetAllUserItems();
+        Task<UserItemCreate> GetUserItemById(string id);
+        Task AddUser(UserItemCreate userItem);
+        Task UpdateUser(UserItemCreate userItem);
+        Task DeleteUser(UserItemCreate userItem);
+        bool Exists(string id);
     }
 }

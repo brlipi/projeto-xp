@@ -14,32 +14,32 @@ namespace projeto_xp.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserContext _context;
+        private readonly IUserRepository _repository;
 
-        public UsersController(UserContext context)
+        public UsersController(IUserRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserItemCreate>>> GetUserItems()
+        public async Task<ActionResult<List<UserItemCreate>>> GetUserItems()
         {
-            return await _context.UserItems.ToListAsync();
+            return Ok(await _repository.GetAllUserItems());
         }
 
         // GET: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
         [HttpGet("{id}")]
         public async Task<ActionResult<UserItemCreate>> GetUserItem(string id)
         {
-            var userItem = await _context.UserItems.FindAsync(id);
+            var userItem = await _repository.GetUserItemById(id);
 
             if (userItem == null)
             {
                 return NotFound();
             }
 
-            return userItem;
+            return Ok(userItem);
         }
 
         // PUT: Users/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -47,7 +47,11 @@ namespace projeto_xp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserItem(string id, UserItemUpdate userItem)
         {
-            var ctxUserItem = await _context.UserItems.FindAsync(id);
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var ctxUserItem = await _repository.GetUserItemById(id);
             if (ctxUserItem == null)
             {
                 return BadRequest();
@@ -68,7 +72,7 @@ namespace projeto_xp.Controllers
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.UpdateUser(ctxUserItem);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -82,7 +86,7 @@ namespace projeto_xp.Controllers
                 }
             }
 
-            return NoContent();
+            return CreatedAtAction(nameof(GetUserItem), new { id = ctxUserItem.Id }, ctxUserItem);
         }
 
         // POST: Users
@@ -90,6 +94,10 @@ namespace projeto_xp.Controllers
         [HttpPost]
         public async Task<ActionResult<UserItemCreate>> PostUserItem(UserItemCreate userItem)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             userItem.CreationDate = DateTime.Now;
             userItem.Id = Guid.NewGuid().ToString();
             if (userItem.Surname == null)
@@ -97,10 +105,9 @@ namespace projeto_xp.Controllers
                 userItem.Surname = "";
             }
 
-            _context.UserItems.Add(userItem);
             try
             {
-                await _context.SaveChangesAsync();
+                await _repository.AddUser(userItem);
             }
             catch (DbUpdateException)
             {
@@ -121,21 +128,23 @@ namespace projeto_xp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUserItem(string id)
         {
-            var userItem = await _context.UserItems.FindAsync(id);
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            var userItem = await _repository.GetUserItemById(id);
             if (userItem == null)
             {
                 return NotFound();
             }
-
-            _context.UserItems.Remove(userItem);
-            await _context.SaveChangesAsync();
+            await _repository.DeleteUser(userItem);
 
             return NoContent();
         }
 
         private bool UserItemExists(string id)
         {
-            return _context.UserItems.Any(e => e.Id == id);
+            return _repository.Exists(id);
         }
     }
 }

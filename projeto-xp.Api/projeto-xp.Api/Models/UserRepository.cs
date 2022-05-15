@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace projeto_xp.Models
 {
@@ -11,24 +10,32 @@ namespace projeto_xp.Models
         {
             _context = context;
         }
-        public UserItemCreate GetUserItemById(string id)
+        public async Task<List<UserItemCreate>> GetAllUserItems()
         {
-            return _context.UserItems.FirstOrDefault(x => x.Id == id);
+            return await _context.UserItems.ToListAsync();
         }
-
-        public IEnumerable<UserItemCreate> GetAllUserItems()
+        public Task<UserItemCreate> GetUserItemById(string id)
         {
-            return _context.UserItems;
+            return _context.UserItems.FirstOrDefaultAsync(u => u.Id == id);
         }
-
-        public void AddUser(UserItemCreate userItem)
+        public Task AddUser(UserItemCreate userItem)
         {
             _context.UserItems.Add(userItem);
+            return _context.SaveChangesAsync();
         }
-
-        public void SaveChanges()
+        public Task UpdateUser(UserItemCreate userItem)
         {
-            _context.SaveChanges();
+            _context.Entry(userItem).State = EntityState.Modified;
+            return _context.SaveChangesAsync();
+        }
+        public Task DeleteUser(UserItemCreate userItem)
+        {
+            _context.Remove(userItem);
+            return _context.SaveChangesAsync();
+        }
+        public bool Exists(string id)
+        {
+            return _context.UserItems.Any(e => e.Id == id);
         }
     }
 }
