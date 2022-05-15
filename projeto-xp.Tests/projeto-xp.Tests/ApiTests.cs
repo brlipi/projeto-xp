@@ -284,37 +284,269 @@ namespace projeto_xp.Tests
             /// Assert
             repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
 
-            //Assert.Equal();
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Jason", userItem.Name);
+            Assert.Equal("Brody", userItem.Surname);
+            Assert.Equal((ushort)25, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemNoName()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Surname = "Brody",
+                    Age = 25
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
+            {
+                Surname = "Brody",
+                Age = 25
+            });
+
+            /// Assert
+            repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
+
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Vaas", userItem.Name);
+            Assert.Equal("Brody", userItem.Surname);
+            Assert.Equal((ushort)25, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemNoSurname()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Name = "Jason",
+                    Age = 25
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
+            {
+                Name = "Jason",
+                Age = 25
+            });
+
+            /// Assert
+            repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
+
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Jason", userItem.Name);
+            Assert.Equal("Montenegro", userItem.Surname);
+            Assert.Equal((ushort)25, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemNoAge()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Name = "Jason",
+                    Surname = "Brody"
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
+            {
+                Name = "Jason",
+                Surname = "Brody"
+            });
+
+            /// Assert
+            repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
+
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Jason", userItem.Name);
+            Assert.Equal("Brody", userItem.Surname);
+            Assert.Equal((ushort)28, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemOverposting()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Id = "Overposted Id",
+                    Name = "Jason",
+                    Surname = "Brody",
+                    Age = 25,
+                    CreationDate = new DateTime(1900, 1, 1)
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
+            {
+                Name = "Jason",
+                Surname = "Brody",
+                Age = 25
+            });
+
+            /// Assert
+            repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
+
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Jason", userItem.Name);
+            Assert.Equal("Brody", userItem.Surname);
+            Assert.Equal((ushort)25, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemEmpty()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate()));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate());
+
+            /// Assert
+            repositoryMock.Verify(r => r.UpdateUser(It.IsAny<UserItemCreate>()));
+
+            var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult);
+            var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
+
+            Assert.Equal(201, objectResult.StatusCode);
+            Assert.Equal("811db0ea-fb33-4226-bec2-6f4fa3d920d6", userItem.Id);
+            Assert.Equal("Vaas", userItem.Name);
+            Assert.Equal("Montenegro", userItem.Surname);
+            Assert.Equal((ushort)28, userItem.Age);
+            Assert.Equal(new DateTime(2022, 05, 13, 18, 30, 15), userItem.CreationDate);
         }
         [Fact]
         public async Task PutUserItemNoId()
         {
+            /// Arrange
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Name = "Jason",
+                    Surname = "Brody",
+                    Age = 25
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
 
+            var controller = new UsersController(repositoryMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("", new UserItemUpdate
+            {
+                Name = "Jason",
+                Surname = "Brody",
+                Age = 25
+            });
+
+            /// Assert
+            var objectResult = Assert.IsType<BadRequestResult>(actionResult);
+
+            Assert.Equal(400, objectResult.StatusCode);
         }
         [Fact]
         public async Task DeleteUserItem()
