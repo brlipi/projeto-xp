@@ -1,30 +1,28 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using projeto_xp.Models;
+using projeto_xp.Api.Models;
 
-namespace projeto_xp.Controllers
+namespace projeto_xp.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _repository;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserRepository repository)
+        public UsersController(IUserRepository repository, ILogger<UsersController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         // GET: Users
         [HttpGet]
         public async Task<ActionResult<List<UserItemCreate>>> GetUserItems()
         {
+            _logger.LogInformation("[UsersController] GET Request for all UserItems");
             return Ok(await _repository.GetAllUserItems());
         }
 

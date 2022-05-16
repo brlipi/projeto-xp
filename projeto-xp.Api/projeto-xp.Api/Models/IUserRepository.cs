@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace projeto_xp.Models
+namespace projeto_xp.Api.Models
 {
     public interface IUserRepository
     {

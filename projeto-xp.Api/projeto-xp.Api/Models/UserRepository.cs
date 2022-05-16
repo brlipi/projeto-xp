@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace projeto_xp.Models
+namespace projeto_xp.Api.Models
 {
     public class UserRepository : IUserRepository
     {
