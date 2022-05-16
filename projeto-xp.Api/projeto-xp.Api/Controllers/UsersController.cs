@@ -38,7 +38,7 @@ namespace projeto_xp.Api.Controllers
                 return NotFound();
             }
 
-            _logger.LogInformation("[UsersController] GET Request UserItem Id: " + id);
+            _logger.LogInformation("[UsersController] GET Request UserItem Id: " + id + " Requested entry: " + "{@UserItemCreate}", userItem);
             return Ok(userItem);
         }
 
@@ -90,7 +90,7 @@ namespace projeto_xp.Api.Controllers
                 }
             }
 
-            _logger.LogInformation("[UsersController] PUT Request for UserItem Id: " + id + " Updated entry: " + ctxUserItem);
+            _logger.LogInformation("[UsersController] PUT Request for UserItem Id: " + id + " Updated entry: " + "{@UserItemCreate}", ctxUserItem);
             return CreatedAtAction(nameof(GetUserItem), new { id = ctxUserItem.Id }, ctxUserItem);
         }
 
@@ -129,7 +129,7 @@ namespace projeto_xp.Api.Controllers
                 }
             }
 
-            _logger.LogInformation("[UsersController] POST Request for Id: " + userItem.Id + " New entry: " + userItem);
+            _logger.LogInformation("[UsersController] POST Request for Id: " + userItem.Id + " New entry: " + "{@UserItemCreate}", userItem);
             return CreatedAtAction(nameof(GetUserItem), new { id = userItem.Id }, userItem);
         }
 
