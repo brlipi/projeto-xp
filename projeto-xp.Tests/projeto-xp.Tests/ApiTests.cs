@@ -2,10 +2,11 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using projeto_xp.Models;
-using projeto_xp.Controllers;
+using projeto_xp.Api.Models;
+using projeto_xp.Api.Controllers;
 using Moq;
 using Xunit;
+using Microsoft.Extensions.Logging;
 
 namespace projeto_xp.Tests
 {
@@ -42,11 +43,12 @@ namespace projeto_xp.Tests
         public async Task GetUserItems()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.GetAllUserItems())
                 .ReturnsAsync(GetTestUsers());
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
             /// Act
             var actionResult = await controller.GetUserItems();
 
@@ -63,11 +65,12 @@ namespace projeto_xp.Tests
         public async Task GetUserItemsEmpty()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.GetAllUserItems())
                 .ReturnsAsync(new List<UserItemCreate>());
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
             /// Act
             var actionResult = await controller.GetUserItems();
 
@@ -84,11 +87,12 @@ namespace projeto_xp.Tests
         public async Task GetUserItem()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.GetUserItemById("a635ffb0-613c-482e-9e05-25ef055d19a7"))
                 .ReturnsAsync(new UserItemCreate { Id = "a635ffb0-613c-482e-9e05-25ef055d19a7", Name = "Arthur", Surname = "Morgan", Age = 36 });
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.GetUserItem("a635ffb0-613c-482e-9e05-25ef055d19a7");
@@ -108,11 +112,12 @@ namespace projeto_xp.Tests
         public async Task GetUserItemNoId()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.GetUserItemById("a635ffb0-613c-482e-9e05-25ef055d19a7"))
                 .ReturnsAsync(new UserItemCreate { Id = "a635ffb0-613c-482e-9e05-25ef055d19a7", Name = "Arthur", Surname = "Morgan", Age = 36 });
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.GetUserItem("");
@@ -128,11 +133,12 @@ namespace projeto_xp.Tests
         public async Task GetUserItemIncorrectId()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.GetUserItemById("a635ffb0-613c-482e-9e05-25ef055d19a7"))
                 .ReturnsAsync(new UserItemCreate { Id = "a635ffb0-613c-482e-9e05-25ef055d19a7", Name = "Arthur", Surname = "Morgan", Age = 36 });
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.GetUserItem("665fef40-f576-4897-9502-e252cd7cbea3");
@@ -148,8 +154,9 @@ namespace projeto_xp.Tests
         public async Task PostUserItem()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PostUserItem(new UserItemCreate { Name = "John", Surname = "Marston", Age = 25 });
@@ -169,8 +176,9 @@ namespace projeto_xp.Tests
         public async Task PostUserItemNoName()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
             controller.ModelState.AddModelError("Name", "The Name field is required.");
 
             /// Act
@@ -184,8 +192,9 @@ namespace projeto_xp.Tests
         public async Task PostUserItemNoSurname()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PostUserItem(new UserItemCreate { Name = "John", Age = 25 });
@@ -205,8 +214,9 @@ namespace projeto_xp.Tests
         public async Task PostUserItemNoAge()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
             controller.ModelState.AddModelError("Age", "The Age field is required.");
 
             /// Act
@@ -223,8 +233,9 @@ namespace projeto_xp.Tests
             string id = "Overposted Id";
             DateTime date = new DateTime(1900, 1, 1);
 
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PostUserItem(new UserItemCreate 
@@ -252,6 +263,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItem()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -271,7 +283,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
@@ -298,6 +310,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemNoName()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -316,7 +329,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
@@ -342,6 +355,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemNoSurname()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -360,7 +374,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
@@ -386,6 +400,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemNoAge()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -404,7 +419,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
@@ -430,6 +445,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemOverposting()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -451,7 +467,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate
@@ -478,6 +494,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemEmpty()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate()));
@@ -492,7 +509,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("811db0ea-fb33-4226-bec2-6f4fa3d920d6", new UserItemUpdate());
@@ -514,6 +531,7 @@ namespace projeto_xp.Tests
         public async Task PutUserItemNoId()
         {
             /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.UpdateUser(new UserItemCreate
@@ -533,7 +551,7 @@ namespace projeto_xp.Tests
                     CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.PutUserItem("", new UserItemUpdate
@@ -554,6 +572,7 @@ namespace projeto_xp.Tests
             /// Arrange
             string id = "0c3b0a22-67f2-4399-8504-d5fdb03c093f";
 
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.DeleteUser(new UserItemCreate 
@@ -576,7 +595,7 @@ namespace projeto_xp.Tests
                     CreationDate = DateTime.Now
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.DeleteUserItem(id);
@@ -593,6 +612,7 @@ namespace projeto_xp.Tests
             string id = "0c3b0a22-67f2-4399-8504-d5fdb03c093f";
             string emptyId = null;
 
+            var loggerMock = new Mock<ILogger<UsersController>>();
             var repositoryMock = new Mock<IUserRepository>();
             repositoryMock
                 .Setup(r => r.DeleteUser(new UserItemCreate
@@ -615,7 +635,7 @@ namespace projeto_xp.Tests
                     CreationDate = DateTime.Now
                 });
 
-            var controller = new UsersController(repositoryMock.Object);
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
             var actionResult = await controller.DeleteUserItem(emptyId);
