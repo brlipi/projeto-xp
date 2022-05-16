@@ -34,9 +34,11 @@ namespace projeto_xp.Api.Controllers
 
             if (userItem == null)
             {
+                _logger.LogInformation("[UsersController] GET Request failed, Id not found. Id: " + id);
                 return NotFound();
             }
 
+            _logger.LogInformation("[UsersController] GET Request UserItem Id: " + id);
             return Ok(userItem);
         }
 
@@ -47,11 +49,13 @@ namespace projeto_xp.Api.Controllers
         {
             if (id == null)
             {
+                _logger.LogInformation("[UsersController] PUT Request failed, Id is missing. Id: " + id);
                 return BadRequest();
             }
             var ctxUserItem = await _repository.GetUserItemById(id);
             if (ctxUserItem == null)
             {
+                _logger.LogInformation("[UsersController] PUT Request failed, UserItem Id does not exist on database. Id: " + id);
                 return BadRequest();
             }
 
@@ -76,14 +80,17 @@ namespace projeto_xp.Api.Controllers
             {
                 if (!UserItemExists(id))
                 {
+                    _logger.LogInformation("[UsersController] PUT Request failed, UserItem Id does not exist on database. Id: " + id);
                     return NotFound();
                 }
                 else
                 {
+                    _logger.LogInformation("[UsersController] PUT Request failed. Analyse cause. Id: " + id);
                     throw;
                 }
             }
 
+            _logger.LogInformation("[UsersController] PUT Request for UserItem Id: " + id + " Updated entry: " + ctxUserItem);
             return CreatedAtAction(nameof(GetUserItem), new { id = ctxUserItem.Id }, ctxUserItem);
         }
 
@@ -94,6 +101,7 @@ namespace projeto_xp.Api.Controllers
         {
             if(!ModelState.IsValid)
             {
+                _logger.LogInformation("[UsersController] POST Request failed. ModelState was not valid. Attempted entry: " + userItem);
                 return BadRequest();
             }
             userItem.CreationDate = DateTime.Now;
@@ -111,14 +119,17 @@ namespace projeto_xp.Api.Controllers
             {
                 if (UserItemExists(userItem.Id))
                 {
+                    _logger.LogInformation("[UsersController] POST Request failed. Id already exists in the database. Id: " + userItem.Id);
                     return Conflict();
                 }
                 else
                 {
+                    _logger.LogInformation("[UsersController] POST Request failed. Analyse cause.");
                     throw;
                 }
             }
 
+            _logger.LogInformation("[UsersController] POST Request for Id: " + userItem.Id + " New entry: " + userItem);
             return CreatedAtAction(nameof(GetUserItem), new { id = userItem.Id }, userItem);
         }
 
@@ -128,15 +139,18 @@ namespace projeto_xp.Api.Controllers
         {
             if (id == null)
             {
+                _logger.LogInformation("[UsersController] DELETE Request failed. Id is missing.");
                 return BadRequest();
             }
             var userItem = await _repository.GetUserItemById(id);
             if (userItem == null)
             {
+                _logger.LogInformation("[UsersController] DELETE Request failed. Id does not exist." + id);
                 return NotFound();
             }
             await _repository.DeleteUser(userItem);
 
+            _logger.LogInformation("[UsersController] DELETE Request for UserItem Id: " + id);
             return NoContent();
         }
 
