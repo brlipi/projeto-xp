@@ -1,5 +1,11 @@
 # projeto-xp
 
+## Requisitos:
+- .NET 6.0
+- SQL Server 2019
+- Docker
+- Docker-compose
+
 ## Inicialização do projeto em máquina local
 - Via Visual Studio:
   1. Abra o arquivo "projeto-xp.Api.sln"
