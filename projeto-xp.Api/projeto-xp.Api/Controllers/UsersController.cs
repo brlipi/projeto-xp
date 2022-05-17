@@ -56,7 +56,7 @@ namespace projeto_xp.Api.Controllers
             if (ctxUserItem == null)
             {
                 _logger.LogInformation("[UsersController] PUT Request failed, UserItem Id does not exist on database. Id: " + id);
-                return BadRequest();
+                return NotFound();
             }
 
             if(userItem.Name != null)

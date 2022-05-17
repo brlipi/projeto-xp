@@ -554,7 +554,7 @@ namespace projeto_xp.Tests
             var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
 
             /// Act
-            var actionResult = await controller.PutUserItem("", new UserItemUpdate
+            var actionResult = await controller.PutUserItem(null, new UserItemUpdate
             {
                 Name = "Jason",
                 Surname = "Brody",
@@ -565,6 +565,45 @@ namespace projeto_xp.Tests
             var objectResult = Assert.IsType<BadRequestResult>(actionResult);
 
             Assert.Equal(400, objectResult.StatusCode);
+        }
+        [Fact]
+        public async Task PutUserItemIncorrectId()
+        {
+            /// Arrange
+            var loggerMock = new Mock<ILogger<UsersController>>();
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.UpdateUser(new UserItemCreate
+                {
+                    Name = "Jason",
+                    Surname = "Brody",
+                    Age = 25
+                }));
+            repositoryMock
+                .Setup(r => r.GetUserItemById("811db0ea-fb33-4226-bec2-6f4fa3d920d6"))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = "811db0ea-fb33-4226-bec2-6f4fa3d920d6",
+                    Name = "Vaas",
+                    Surname = "Montenegro",
+                    Age = 28,
+                    CreationDate = new DateTime(2022, 05, 13, 18, 30, 15)
+                });
+
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
+
+            /// Act
+            var actionResult = await controller.PutUserItem("d50fb7d7-137d-4074-8302-2c49880a14c1", new UserItemUpdate
+            {
+                Name = "Jason",
+                Surname = "Brody",
+                Age = 25
+            });
+
+            /// Assert
+            var objectResult = Assert.IsType<NotFoundResult>(actionResult);
+
+            Assert.Equal(404, objectResult.StatusCode);
         }
         [Fact]
         public async Task DeleteUserItem()
@@ -644,6 +683,46 @@ namespace projeto_xp.Tests
             var objectResult = Assert.IsType<BadRequestResult>(actionResult);
 
             Assert.Equal(400, objectResult.StatusCode);
+        }
+        [Fact]
+        public async Task DeleteUserItemIncorrectId()
+        {
+            /// Arrange
+            string id = "0c3b0a22-67f2-4399-8504-d5fdb03c093f";
+            string emptyId = "47705ba1-17b2-4e87-acfe-4c121cca85b5";
+
+            var loggerMock = new Mock<ILogger<UsersController>>();
+            var repositoryMock = new Mock<IUserRepository>();
+            repositoryMock
+                .Setup(r => r.DeleteUser(new UserItemCreate
+                {
+                    Id = id,
+                    Name = "Jack",
+                    Surname = "Marston",
+                    Age = 12,
+                    CreationDate = DateTime.Now
+                }))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+            repositoryMock.Setup(r => r.GetUserItemById(id))
+                .ReturnsAsync(new UserItemCreate
+                {
+                    Id = id,
+                    Name = "Jack",
+                    Surname = "Marston",
+                    Age = 12,
+                    CreationDate = DateTime.Now
+                });
+
+            var controller = new UsersController(repositoryMock.Object, loggerMock.Object);
+
+            /// Act
+            var actionResult = await controller.DeleteUserItem(emptyId);
+
+            /// Assert
+            var objectResult = Assert.IsType<NotFoundResult>(actionResult);
+
+            Assert.Equal(404, objectResult.StatusCode);
         }
     }
 }
