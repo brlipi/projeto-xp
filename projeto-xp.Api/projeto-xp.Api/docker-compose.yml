@@ -14,17 +14,20 @@ services:
       Password: "${DB_PASSWD}"
       Database: "Users"
     ports:
-      - "5000:80"
+      - "8880:80"
     volumes:
       - ./DockerLogs:/app/logs
     depends_on:
       - mssql-db
   mssql-db:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: database
     user: root
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "${DB_PASSWD}"
       MSSQL_PID: Express
     ports:
-      - "1433:1433"
+      - "1450:1433"
+    volumes:
+    - ./DockerData:/var/opt/mssql/data
