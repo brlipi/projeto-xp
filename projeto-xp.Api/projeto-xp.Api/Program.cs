@@ -13,8 +13,25 @@ try
     builder.Host.UseSerilog(Log.Logger);
 
     builder.Services.AddControllers();
-    builder.Services.AddDbContext<UserContext>(opt =>
+
+    if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+    {
+        var server = builder.Configuration["DbServer"];
+        var port = builder.Configuration["DbPort"];
+        var user = builder.Configuration["DbUser"];
+        var password = builder.Configuration["Password"];
+        var database = builder.Configuration["Database"];
+        var connectionString = $"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}";
+
+        builder.Services.AddDbContext<UserContext>(opt =>
+        opt.UseSqlServer(builder.Configuration.GetConnectionString(connectionString)));
+    }
+    else
+    {
+        builder.Services.AddDbContext<UserContext>(opt =>
         opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    }
+
     builder.Services.AddScoped<IUserRepository, UserRepository>();
 
     var app = builder.Build();
