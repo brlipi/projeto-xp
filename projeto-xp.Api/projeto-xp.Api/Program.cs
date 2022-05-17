@@ -24,7 +24,7 @@ try
         var connectionString = $"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}";
 
         builder.Services.AddDbContext<UserContext>(opt =>
-        opt.UseSqlServer(builder.Configuration.GetConnectionString(connectionString)));
+        opt.UseSqlServer(connectionString));
     }
     else
     {
@@ -45,7 +45,7 @@ try
         app.UseDeveloperExceptionPage();
     }
 
-    app.UseHttpsRedirection();
+    //app.UseHttpsRedirection();
 
     app.UseAuthorization();
 

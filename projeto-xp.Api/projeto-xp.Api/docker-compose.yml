@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  projeto-xp.api:
+    image: ${DOCKER_REGISTRY-}projetoxpapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    environment:
+      DbServer: "mssql-db"
+      DbPort: "1450"
+      DbUser: "SA"
+      Password: "${DB_PASSWD}"
+      Database: "Users"
+    ports:
+      - "8880:80"
+      - "8843:443"
+    volumes:
+      - ./DockerLogs:/app/logs
+    depends_on:
+      - mssql-db
+  mssql-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${DB_PASSWD}"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
