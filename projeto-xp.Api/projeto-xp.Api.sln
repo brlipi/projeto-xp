@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "projeto-xp.Api", "projeto-xp.Api\projeto-xp.Api.csproj", "{32880C85-97FB-453B-AED2-98718642B676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "projeto-xp.Api", "projeto-xp.Api\projeto-xp.Api.csproj", "{32880C85-97FB-453B-AED2-98718642B676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "projeto-xp.Tests", "..\projeto-xp.Tests\projeto-xp.Tests\projeto-xp.Tests.csproj", "{AB6DAD80-4DBB-4F7B-BE10-4A842FF33C2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "projeto-xp.Tests", "..\projeto-xp.Tests\projeto-xp.Tests\projeto-xp.Tests.csproj", "{AB6DAD80-4DBB-4F7B-BE10-4A842FF33C2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{E6BA02C0-190F-4725-A511-0AC06AA74CB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
