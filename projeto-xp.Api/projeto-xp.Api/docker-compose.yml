@@ -9,13 +9,12 @@ services:
     container_name: api
     environment:
       DbServer: "mssql-db"
-      DbPort: "1450"
+      DbPort: "1433"
       DbUser: "SA"
       Password: "${DB_PASSWD}"
       Database: "Users"
     ports:
-      - "8880:80"
-      - "8843:443"
+      - "5000:80"
     volumes:
       - ./DockerLogs:/app/logs
     depends_on:

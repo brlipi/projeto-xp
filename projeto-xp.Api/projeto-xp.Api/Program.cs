@@ -3,6 +3,7 @@ using Serilog;
 using projeto_xp.Api.Models;
 using projeto_xp.Api.Extensions;
 using projeto_xp.Api.Middlewares;
+using projeto_xp.Api.Services;
 
 try
 {
@@ -35,6 +36,8 @@ try
     builder.Services.AddScoped<IUserRepository, UserRepository>();
 
     var app = builder.Build();
+
+    DatabaseManagementService.MigrationInitialization(app);
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseMiddleware<RequestSerilogMiddleware>();
