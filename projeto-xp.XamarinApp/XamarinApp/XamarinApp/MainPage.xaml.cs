@@ -48,29 +48,34 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnAdd(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new CreateNewUser());
             // Cria uma instância de Post atribuindo um TimeStamp à propriedade Title
-            User post = new User
+            /*User post = new User
             {
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Place",
                 Surname = "Holder",
                 Age = 0,
                 //CreationDate = DateTime.Now
-            };
+            };*/
             // Serializa ou converte o Post criado em uma string JSON
-            string content = JsonConvert.SerializeObject(post);
+            //string content = JsonConvert.SerializeObject(post);
             // Envia uma requisição POST para a Uri especificada em uma operação assíncrona
             // e com a codificação correta(utf8) e com o content type(application/json).
-            var response = await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
-            var responseContent = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+            //var response = await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
+            //var responseContent = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 
-            if (response.IsSuccessStatusCode)
+            /*if (response.IsSuccessStatusCode)
             {
                 // Atualiza a UI inserindo um elemento na coleção
                 _users.Add(responseContent);
-            }
+            }*/
             
         }
+        /*Async void OnNextPageButtonClicked(objeto remetente, EventArgs e)
+        {
+            await Navigation.PushAsync(new Pagina2());
+        }*/
 
         /// <summary>
         /// Evento Click do botão Atualizar

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:xamarinapp="clr-namespace:XamarinApp"
-             x:Class="XamarinApp.MainPage">
+             x:Class="XamarinApp.MainPage"
+             Title="Registered Users">
 
     <StackLayout>
         <ListView x:Name="MainPage_ListView"
@@ -65,9 +66,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal"
+                     Padding="10">
             <Button x:Name="btnAdd"
                 BackgroundColor="DarkGreen"
+                TextColor="White"
                 Clicked="OnAdd"
                 Text="Create User" />
             <!--<Button  x:Name="btnUpdate"
@@ -77,6 +80,7 @@
                 Text="Update User" />-->
             <Button  x:Name="btnDelete"
                 BackgroundColor="Red"
+                TextColor="White"
                 Clicked="OnDelete"
                 Text="Delete User" />
         </StackLayout>
