@@ -23,7 +23,7 @@ namespace XamarinApp
         //e que permite atualizar o estado da UI em temporeal quando os dados forem alterados
         private ObservableCollection<User> _users;
 
-        private int position;
+        private int? position = null;
 
         protected override async void OnAppearing()
         {
@@ -48,34 +48,8 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnAdd(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreateNewUser());
-            // Cria uma instância de Post atribuindo um TimeStamp à propriedade Title
-            /*User post = new User
-            {
-                //Id = Guid.NewGuid().ToString(),
-                Name = "Place",
-                Surname = "Holder",
-                Age = 0,
-                //CreationDate = DateTime.Now
-            };*/
-            // Serializa ou converte o Post criado em uma string JSON
-            //string content = JsonConvert.SerializeObject(post);
-            // Envia uma requisição POST para a Uri especificada em uma operação assíncrona
-            // e com a codificação correta(utf8) e com o content type(application/json).
-            //var response = await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
-            //var responseContent = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
-
-            /*if (response.IsSuccessStatusCode)
-            {
-                // Atualiza a UI inserindo um elemento na coleção
-                _users.Add(responseContent);
-            }*/
-            
+            await Navigation.PushAsync(new CreateNewUser());            
         }
-        /*Async void OnNextPageButtonClicked(objeto remetente, EventArgs e)
-        {
-            await Navigation.PushAsync(new Pagina2());
-        }*/
 
         /// <summary>
         /// Evento Click do botão Atualizar
@@ -84,17 +58,18 @@ namespace XamarinApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /*private async void OnUpdate(object sender, EventArgs e)
+        private async void OnUpdate(object sender, EventArgs e)
         {
-            // Atribui o segundo objeto Post da Coleção para uma nova instância de Post
+            await Navigation.PushAsync(new UpdateUser());
+            /*// Atribui o segundo objeto Post da Coleção para uma nova instância de Post
             User post = _users[position];
             // Anexa a string [atualizado] ao valor atual da propriedade Title
             post.Title += " [atualizado]";
             // Serializa ou converte o post criado em uma string JSON
             string content = JsonConvert.SerializeObject(post);
             // Envia uma requisição PUT para a uri definida como uma operação assincrona
-            await _client.PutAsync(Url + "/" + post.Id, new StringContent(content, Encoding.UTF8, "application/json"));
-        }*/
+            await _client.PutAsync(Url + "/" + post.Id, new StringContent(content, Encoding.UTF8, "application/json"));*/
+        }
 
         /// <summary>
         /// Evento Click do botão Deletar
@@ -105,10 +80,11 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnDelete(object sender, EventArgs e)
         {
-            if (_users[position] != null)
+            if (position != null)
             {
+                int deletePosition = (int) position;
                 // Atribui o primeiro objeto Post da Coleção para uma nova instância de Post
-                User post = _users[position];
+                User post = _users[deletePosition];
                 // Envia uma requisição DELETE para a Uri de forma assíncrona
                 var response = await _client.DeleteAsync(Url + "/" + post.Id);
 
@@ -116,14 +92,12 @@ namespace XamarinApp
                 {
                     _users.Remove(post);
                 }
-                // Remove a primeira ocorrencia do objeto especificado na coleção Post
             }
         }
 
         private void MainPage_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             position = e.SelectedItemIndex;
-            //DisplayAlert("")
         }
     }
 }

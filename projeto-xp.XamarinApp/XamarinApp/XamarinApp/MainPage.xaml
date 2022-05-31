@@ -73,11 +73,11 @@
                 TextColor="White"
                 Clicked="OnAdd"
                 Text="Create User" />
-            <!--<Button  x:Name="btnUpdate"
+            <Button  x:Name="btnUpdate"
                 BackgroundColor="Orange"
                 Clicked="OnUpdate"
                 HorizontalOptions="CenterAndExpand"
-                Text="Update User" />-->
+                Text="Update User" />
             <Button  x:Name="btnDelete"
                 BackgroundColor="Red"
                 TextColor="White"
