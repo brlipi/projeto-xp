@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace XamarinApp
 {
-    public class Post : INotifyPropertyChanged
+    public class User : INotifyPropertyChanged
     {
         public int Id { get; set; }
 

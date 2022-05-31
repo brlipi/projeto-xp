@@ -4,8 +4,8 @@
              x:Class="XamarinApp.MainPage">
 
     <StackLayout>
-        <ListView x:Name="lvwDados"
-                  ItemSelected="lvwDados_ItemSelected">
+        <ListView x:Name="MainPage"
+                  ItemSelected="MainPage_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding Title}" TextColor="Black" />
