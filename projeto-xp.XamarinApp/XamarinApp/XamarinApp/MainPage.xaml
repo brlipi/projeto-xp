@@ -1,36 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:xamarinapp="clr-namespace:XamarinApp"
              x:Class="XamarinApp.MainPage">
 
     <StackLayout>
         <ListView x:Name="MainPage_ListView"
-                  ItemSelected="MainPage_ItemSelected">
+                  ItemSelected="MainPage_ItemSelected"
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <!--<Label>
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Id: " FontAttributes="Bold"/>
-                                <Span Text="{Binding Id}"/>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>-->
-                    <!--<TextCell Text="{Binding Id}" TextColor="Black" />
-                    <TextCell Text="{Binding Name}" TextColor="Black" />
-                    <TextCell Text="{Binding Surname}" TextColor="Black" />
-                    <TextCell Text="{Binding Age}" TextColor="Black" />
-                    <TextCell Text="{Binding CreationDate}" TextColor="Black" />-->
-                    <!--<TextCell Text="{Binding Title}" TextColor="Black" />-->
+                <DataTemplate x:DataType="xamarinapp:User">
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Frame CornerRadius="10"
+                                   HasShadow="True">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout VerticalOptions="Center">
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Id: " FontAttributes="Bold"/>
+                                                    <Span Text="{Binding Id}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Name: " FontAttributes="Bold"/>
+                                                    <Span Text="{Binding Name}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Surname: " FontAttributes="Bold"/>
+                                                    <Span Text="{Binding Surname}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Age: " FontAttributes="Bold"/>
+                                                    <Span Text="{Binding Age}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Creation Date: " FontAttributes="Bold"/>
+                                                    <Span Text="{Binding CreationDate}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                </StackLayout>
+
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout Orientation="Horizontal">
-            <!--<Button x:Name="btnAdd"
+            <Button x:Name="btnAdd"
                 BackgroundColor="DarkGreen"
                 Clicked="OnAdd"
                 Text="Create User" />
-            <Button  x:Name="btnUpdate"
+            <!--<Button  x:Name="btnUpdate"
                 BackgroundColor="Orange"
                 Clicked="OnUpdate"
                 HorizontalOptions="CenterAndExpand"

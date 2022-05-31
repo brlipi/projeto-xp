@@ -30,6 +30,7 @@ namespace XamarinApp
             // Envia uma requisição GET para a url especificada e retorna
             // o Response (Body) como uma string em uma operação assíncrona
             string content = await _client.GetStringAsync(Url);
+
             // Deserializa ou converte a string JSON em uma coleção de Post
             List<User> users = JsonConvert.DeserializeObject<List<User>>(content);
             // Convertendo a Lista para uma ObservalbleCollection de Post
@@ -45,18 +46,31 @@ namespace XamarinApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /*private async void OnAdd(object sender, EventArgs e)
+        private async void OnAdd(object sender, EventArgs e)
         {
             // Cria uma instância de Post atribuindo um TimeStamp à propriedade Title
-            User post = new User { Title = $"Title: Timestamp {DateTime.UtcNow.Ticks}" };
+            User post = new User
+            {
+                //Id = Guid.NewGuid().ToString(),
+                Name = "Place",
+                Surname = "Holder",
+                Age = 0,
+                //CreationDate = DateTime.Now
+            };
             // Serializa ou converte o Post criado em uma string JSON
             string content = JsonConvert.SerializeObject(post);
             // Envia uma requisição POST para a Uri especificada em uma operação assíncrona
             // e com a codificação correta(utf8) e com o content type(application/json).
-            await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
-            // Atualiza a UI inserindo um elemento na coleção
-            _users.Add(post);
-        }*/
+            var response = await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
+            var responseContent = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Atualiza a UI inserindo um elemento na coleção
+                _users.Add(responseContent);
+            }
+            
+        }
 
         /// <summary>
         /// Evento Click do botão Atualizar
@@ -86,12 +100,19 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnDelete(object sender, EventArgs e)
         {
-            // Atribui o primeiro objeto Post da Coleção para uma nova instância de Post
-            User post = _users[position];
-            // Envia uma requisição DELETE para a Uri de forma assíncrona
-            await _client.DeleteAsync(Url + "/" + post.Id);
-            // Remove a primeira ocorrencia do objeto especificado na coleção Post
-            _users.Remove(post);
+            if (_users[position] != null)
+            {
+                // Atribui o primeiro objeto Post da Coleção para uma nova instância de Post
+                User post = _users[position];
+                // Envia uma requisição DELETE para a Uri de forma assíncrona
+                var response = await _client.DeleteAsync(Url + "/" + post.Id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    _users.Remove(post);
+                }
+                // Remove a primeira ocorrencia do objeto especificado na coleção Post
+            }
         }
 
         private void MainPage_ItemSelected(object sender, SelectedItemChangedEventArgs e)

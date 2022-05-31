@@ -34,7 +34,7 @@ namespace XamarinApp
             get => _name;
             set
             {
-                _surname = value;
+                _name = value;
                 //Notifica a sua View ou ViewModel que o valor que a propriedade
                 //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
