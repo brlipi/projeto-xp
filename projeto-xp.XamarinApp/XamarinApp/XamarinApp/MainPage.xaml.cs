@@ -35,7 +35,7 @@ namespace XamarinApp
             // Convertendo a Lista para uma ObservalbleCollection de Post
             _users = new ObservableCollection<User>(users);
             //Atribui a ObservableCollection ao Listview MainPage 
-            MainPage.ItemsSource = _users;
+            MainPage_ListView.ItemsSource = _users;
             base.OnAppearing();
         }
 
@@ -45,7 +45,7 @@ namespace XamarinApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnAdd(object sender, EventArgs e)
+        /*private async void OnAdd(object sender, EventArgs e)
         {
             // Cria uma instância de Post atribuindo um TimeStamp à propriedade Title
             User post = new User { Title = $"Title: Timestamp {DateTime.UtcNow.Ticks}" };
@@ -56,7 +56,7 @@ namespace XamarinApp
             await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
             // Atualiza a UI inserindo um elemento na coleção
             _users.Add(post);
-        }
+        }*/
 
         /// <summary>
         /// Evento Click do botão Atualizar
@@ -65,7 +65,7 @@ namespace XamarinApp
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void OnUpdate(object sender, EventArgs e)
+        /*private async void OnUpdate(object sender, EventArgs e)
         {
             // Atribui o segundo objeto Post da Coleção para uma nova instância de Post
             User post = _users[position];
@@ -75,7 +75,7 @@ namespace XamarinApp
             string content = JsonConvert.SerializeObject(post);
             // Envia uma requisição PUT para a uri definida como uma operação assincrona
             await _client.PutAsync(Url + "/" + post.Id, new StringContent(content, Encoding.UTF8, "application/json"));
-        }
+        }*/
 
         /// <summary>
         /// Evento Click do botão Deletar

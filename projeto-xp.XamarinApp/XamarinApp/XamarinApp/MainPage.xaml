@@ -4,16 +4,29 @@
              x:Class="XamarinApp.MainPage">
 
     <StackLayout>
-        <ListView x:Name="MainPage"
+        <ListView x:Name="MainPage_ListView"
                   ItemSelected="MainPage_ItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Title}" TextColor="Black" />
+                    <!--<Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Id: " FontAttributes="Bold"/>
+                                <Span Text="{Binding Id}"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>-->
+                    <!--<TextCell Text="{Binding Id}" TextColor="Black" />
+                    <TextCell Text="{Binding Name}" TextColor="Black" />
+                    <TextCell Text="{Binding Surname}" TextColor="Black" />
+                    <TextCell Text="{Binding Age}" TextColor="Black" />
+                    <TextCell Text="{Binding CreationDate}" TextColor="Black" />-->
+                    <!--<TextCell Text="{Binding Title}" TextColor="Black" />-->
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout Orientation="Horizontal">
-            <Button x:Name="btnAdd"
+            <!--<Button x:Name="btnAdd"
                 BackgroundColor="DarkGreen"
                 Clicked="OnAdd"
                 Text="Create User" />
@@ -21,7 +34,7 @@
                 BackgroundColor="Orange"
                 Clicked="OnUpdate"
                 HorizontalOptions="CenterAndExpand"
-                Text="Update User" />
+                Text="Update User" />-->
             <Button  x:Name="btnDelete"
                 BackgroundColor="Red"
                 Clicked="OnDelete"
