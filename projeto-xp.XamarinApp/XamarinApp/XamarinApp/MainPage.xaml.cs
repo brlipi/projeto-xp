@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
-using System.Text;
 using Xamarin.Forms;
 
 namespace XamarinApp
@@ -48,7 +47,7 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnAdd(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreateNewUser());            
+            await Navigation.PushAsync(new CreateNewUser());
         }
 
         /// <summary>
@@ -60,7 +59,13 @@ namespace XamarinApp
         /// <param name="e"></param>
         private async void OnUpdate(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new UpdateUser());
+            if (position != null)
+            {
+                int updatePosition = (int)position;
+                var updateUserPage = new UpdateUser();
+                MessagingCenter.Send(updateUserPage, "UpdateUser", _users[updatePosition]);
+                await Navigation.PushAsync(updateUserPage);
+            }
             /*// Atribui o segundo objeto Post da Coleção para uma nova instância de Post
             User post = _users[position];
             // Anexa a string [atualizado] ao valor atual da propriedade Title
@@ -82,7 +87,7 @@ namespace XamarinApp
         {
             if (position != null)
             {
-                int deletePosition = (int) position;
+                int deletePosition = (int)position;
                 // Atribui o primeiro objeto Post da Coleção para uma nova instância de Post
                 User post = _users[deletePosition];
                 // Envia uma requisição DELETE para a Uri de forma assíncrona
