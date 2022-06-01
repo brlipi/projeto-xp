@@ -7,7 +7,6 @@ namespace XamarinApp
 {
     public class User : INotifyPropertyChanged
     {
-        //Método OnPropertyChanged()
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -22,8 +21,6 @@ namespace XamarinApp
             set
             {
                 _id = value;
-                //Notifica a sua View ou ViewModel que o valor que a propriedade
-                //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
             }
         }
@@ -35,8 +32,6 @@ namespace XamarinApp
             set
             {
                 _name = value;
-                //Notifica a sua View ou ViewModel que o valor que a propriedade
-                //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
             }
         }
@@ -48,8 +43,6 @@ namespace XamarinApp
             set
             {
                 _surname = value;
-                //Notifica a sua View ou ViewModel que o valor que a propriedade
-                //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
             }
         }
@@ -61,8 +54,6 @@ namespace XamarinApp
             set
             {
                 _age = value;
-                //Notifica a sua View ou ViewModel que o valor que a propriedade
-                //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
             }
         }
@@ -74,8 +65,6 @@ namespace XamarinApp
             set
             {
                 _creationDate = value;
-                //Notifica a sua View ou ViewModel que o valor que a propriedade
-                //no modelo mudou e a view precisa ser atualizada
                 OnPropertyChanged();
             }
         }

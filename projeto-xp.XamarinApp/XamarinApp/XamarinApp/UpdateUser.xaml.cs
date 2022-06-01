@@ -19,7 +19,6 @@ namespace XamarinApp
             InitializeComponent();
             MessagingCenter.Subscribe<UpdateUser, User>(this, "UpdateUser", (pageSender, userItem) =>
             {
-                //DisplayAlert("MessagingCenter", "Inside Subscribe's action", "Ok");
                 updateUser = userItem;
             });
         }
@@ -57,10 +56,7 @@ namespace XamarinApp
             updateUser.Surname = surname;
             updateUser.Age = Convert.ToUInt16(age);
 
-            // Serializa ou converte o Post criado em uma string JSON
             string content = JsonConvert.SerializeObject(updateUser);
-            // Envia uma requisição POST para a Uri especificada em uma operação assíncrona
-            // e com a codificação correta(utf8) e com o content type(application/json).
             var response = await _client.PutAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)

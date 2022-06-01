@@ -47,10 +47,7 @@ namespace XamarinApp
                 newUser.Surname = surname;
                 newUser.Age = Convert.ToUInt16(age);
 
-                // Serializa ou converte o Post criado em uma string JSON
                 string content = JsonConvert.SerializeObject(newUser);
-                // Envia uma requisição POST para a Uri especificada em uma operação assíncrona
-                // e com a codificação correta(utf8) e com o content type(application/json).
                 var response = await _client.PostAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
 
                 if (response.IsSuccessStatusCode)
