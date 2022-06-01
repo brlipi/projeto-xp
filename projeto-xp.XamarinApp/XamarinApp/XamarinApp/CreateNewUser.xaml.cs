@@ -29,15 +29,15 @@ namespace XamarinApp
             {
                 surname = "";
             }
-            if ((name == null && age == null) || (name == "" && age == ""))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(age))
             {
                 await DisplayAlert("Error", "Please insert a Name and an Age", "Ok");
             }
-            else if (name == null || name == "")
+            else if (string.IsNullOrEmpty(name))
             {
                 await DisplayAlert("Error", "Please insert a Name", "Ok");
             }
-            else if (age == null || age == "")
+            else if (string.IsNullOrEmpty(age))
             {
                 await DisplayAlert("Error", "Please insert an Age", "Ok");
             }

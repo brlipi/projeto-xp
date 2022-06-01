@@ -16,7 +16,7 @@
                 <Entry x:Name="AgeField"
                        Placeholder="Age"/>
                 <Button x:Name="updateUserButton"
-                    Text="Create User"
+                    Text="Update User"
                     BackgroundColor="Orange"
                     TextColor="White"
                     Clicked="updateUserButton_Clicked"/>
