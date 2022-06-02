@@ -29,7 +29,7 @@ namespace XamarinApp
             {
                 surname = "";
             }
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(age))
+            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(age))
             {
                 await DisplayAlert("Error", "Please insert a Name and an Age", "Ok");
             }

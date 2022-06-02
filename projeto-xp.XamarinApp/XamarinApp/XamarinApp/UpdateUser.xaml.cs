@@ -43,14 +43,15 @@ namespace XamarinApp
             {
                 updateUser.Name = name;
             }
-            if (!string.IsNullOrEmpty(surname))
-            {
-                updateUser.Surname = surname;
-            }
             if (!string.IsNullOrEmpty(age))
             {
                 updateUser.Age = Convert.ToUInt16(age);
             }
+            if (surname == null)
+            {
+                surname = "";
+            }
+            updateUser.Surname = surname;
 
             string content = JsonConvert.SerializeObject(updateUser);
             var response = await _client.PutAsync(Url, new StringContent(content, Encoding.UTF8, "application/json"));
