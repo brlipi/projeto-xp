@@ -14,7 +14,8 @@
                 <Entry x:Name="SurnameField"
                        Placeholder="Surname"/>
                 <Entry x:Name="AgeField"
-                       Placeholder="Age"/>
+                       Placeholder="Age"
+                       Keyboard="Numeric"/>
                 <Button x:Name="updateUserButton"
                     Text="Update User"
                     BackgroundColor="Orange"
