@@ -31,3 +31,13 @@ services:
       - "1450:1433"
     volumes:
     - ./DockerData:/var/opt/mssql/data
+  php-website:
+    container_name: website
+    build:
+      context: ../../projeto-xp.Website
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - ../../projeto-xp.Website/website:/var/www/html
+      - /var/www/html/vendor/

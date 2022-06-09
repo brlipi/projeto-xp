@@ -73,7 +73,7 @@
                     if (empty($result))
                     {			
                         $_SESSION['usertable'] = serialize($user);
-                        echo "Error: User could not be created."
+                        echo "Error: User could not be created.";
                         $this->pageRedirect("../View/create.php");
                     }
                     else
@@ -103,7 +103,7 @@
                 if (empty($result))
                 {			
                     $_SESSION['usertable'] = serialize($user);
-                    echo "Error: User could not be updated."
+                    echo "Error: User could not be updated.";
                     $this->pageRedirect("../View/update.php");
                 }
                 else
@@ -115,12 +115,19 @@
             {
                 $id = $_GET['id'];
                 $result = $this->userModel->getUser($id);
-                
-                $user = new User();
-                $user->id = $result->id;
-                $user->name= $result->name;
-                $user->surname = $result->surname;
-                $user->age = $result->age;
+
+                if (empty($result))
+                {
+                    echo "Error: User could not be retrieved.";
+                }
+                else
+                {
+                    $user = new User();
+                    $user->id = $result->id;
+                    $user->name= $result->name;
+                    $user->surname = $result->surname;
+                    $user->age = $result->age;
+                }
                 
                 $_SESSION["usertable"] = serialize($user);
                 $this->pageRedirect('../View/update.php');
