@@ -73,6 +73,7 @@
                     if (empty($result))
                     {			
                         $_SESSION['usertable'] = serialize($user);
+                        echo "Error: User could not be created."
                         $this->pageRedirect("../View/create.php");
                     }
                     else
@@ -102,6 +103,7 @@
                 if (empty($result))
                 {			
                     $_SESSION['usertable'] = serialize($user);
+                    echo "Error: User could not be updated."
                     $this->pageRedirect("../View/update.php");
                 }
                 else

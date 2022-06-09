@@ -27,7 +27,6 @@
 
             curl_setopt_array($curlSession, $options);
 
-            // See how to get response code and do an if else maybe?
             $response = curl_exec($curlSession);
 
             $content = json_decode($response, true);
@@ -48,7 +47,6 @@
 
             curl_setopt_array($curlSession, $options);
 
-            // See how to get response code and do an if else maybe?
             $response = curl_exec($curlSession);
 
             $content = json_decode($response);
@@ -77,7 +75,6 @@
 
                 curl_setopt_array($curlSession, $options);
                 
-                // See how to get response code and do an if else maybe?
                 $content = curl_exec($curlSession);
 
                 curl_close($curlSession);
@@ -106,7 +103,6 @@
 
             curl_setopt_array($curlSession, $options);
 
-            // See how to get response code and do an if else maybe?
             $content = curl_exec($curlSession);
 
             curl_close($curlSession);
