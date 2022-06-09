@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  php-website:
+    container_name: website
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    volumes:
+      - ./website:/var/www/html
