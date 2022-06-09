@@ -55,8 +55,6 @@
 
             curl_close($curlSession);
 
-            //echo $this->url . $id;
-
             return $content;
         }
 

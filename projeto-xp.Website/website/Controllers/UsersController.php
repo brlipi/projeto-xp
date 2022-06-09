@@ -11,7 +11,7 @@
 		{
 			$this->userModel =  new UserModel();
 		}
-        // mvc handler request
+
 		public function mvcHandler() 
 		{
 			$act = isset($_GET['act']) ? $_GET['act'] : NULL;
@@ -97,8 +97,6 @@
                 $user->name = trim($_POST['name']);
                 $user->surname = trim($_POST['surname']);
                 $user->age = trim($_POST['age']);                    
-                // check validation  
-                //$chk=$this->checkValidation($sporttb);
 
                 $result = $this->userModel->putUser($user);
                 if (empty($result))
@@ -123,35 +121,8 @@
                 $user->age = $result->age;
                 
                 $_SESSION["usertable"] = serialize($user);
-                //echo $user->id;
                 $this->pageRedirect('../View/update.php');
             }
-                /*if($chk)
-                {
-                    $res = $this -> objsm ->updateRecord($sporttb);	                        
-                    if($res){			
-                        $this->list();                           
-                    }else{
-                        echo "Somothing is wrong..., try again.";
-                    }
-                }else
-                {         
-                    $_SESSION['userTable']=serialize($sporttb);      
-                    $this->pageRedirect("View/update.php");                
-                }
-            }elseif(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-                $id=$_GET['id'];
-                $result=$this->objsm->selectRecord($id);
-                $row=mysqli_fetch_array($result);  
-                $sporttb=new sports();                  
-                $sporttb->id=$row["id"];
-                $sporttb->name=$row["name"];
-                $sporttb->category=$row["category"];
-                $_SESSION['sporttbl0']=serialize($sporttb);
-                $this->pageRedirect('View/update.php');
-            }else{
-                echo "Invalid operation.";
-            }*/
         }
 
         public function delete()
