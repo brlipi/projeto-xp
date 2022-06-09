@@ -95,7 +95,7 @@
             {
                 $user = unserialize($_SESSION['usertable']);
                 $user->id = trim($_POST['id']);
-                $user->name = trim($_POST['name']);
+                $user->name = !empty(trim($_POST['name'])) ? trim($_POST['name']) : $user->name;
                 $user->surname = trim($_POST['surname']);
                 $user->age = trim($_POST['age']);                    
 
