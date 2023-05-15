@@ -3,29 +3,29 @@
     require '../Models/User.php';
 
     session_status() === PHP_SESSION_ACTIVE ? TRUE : session_start();
-    
-	class UsersController 
+
+	class UsersController
 	{
 
- 		function __construct() 
+		function __construct()
 		{
 			$this->userModel =  new UserModel();
 		}
 
-		public function mvcHandler() 
+		public function mvcHandler()
 		{
 			$act = isset($_GET['act']) ? $_GET['act'] : NULL;
-			switch ($act) 
+			switch ($act)
 			{
-                case 'add' :                    
+                case 'add' :
 					$this->create();
-					break;						
+					break;
 				case 'update':
 					$this->update();
-					break;				
-				case 'delete' :					
+					break;
+				case 'delete':
 					$this -> delete();
-					break;								
+					break;
 				default:
                     $this->list();
 			}
@@ -33,10 +33,10 @@
 		public function pageRedirect($url)
 		{
 			header('Location:'.$url);
-		}	
+		}
 
 		public function validateUser($user)
-        {    
+        {
             $validUser = true;
 
             if (empty($user->name))
@@ -47,8 +47,8 @@
             if (empty($user->age))
             {
                 $user->ageMsg = "Please insert an age.";
-                $validUser = false;     
-            } 
+                $validUser = false;
+            }
             else if($user->age < 0 || $user->age > 65535)
             {
                 $user->ageMsg = "Age must be between 0 and 65535.";
@@ -60,18 +60,18 @@
 		public function create()
 		{
             $user = new User();
-            if (isset($_POST['createbutton'])) 
-            {   
+            if (isset($_POST['createbutton']))
+            {
                 $user->name = trim($_POST['name']);
                 $user->surname = trim($_POST['surname']);
                 $user->age = trim($_POST['age']);
 
                 $userValidation = $this->validateUser($user);
                 if ($userValidation)
-                {   
+                {
                     $result = $this->userModel->postUser($user);
                     if (empty($result))
-                    {			
+                    {
                         $_SESSION['usertable'] = serialize($user);
                         echo "Error: User could not be created.";
                         $this->pageRedirect("../View/create.php");
@@ -82,8 +82,8 @@
                     }
                 }
                 else
-                {    
-                    $_SESSION['usertable'] = serialize($user);          
+                {
+                    $_SESSION['usertable'] = serialize($user);
                     $this->pageRedirect("../View/create.php");
                 }
             }
@@ -91,17 +91,17 @@
 
         public function update()
 		{
-            if (isset($_POST['updatebutton'])) 
+            if (isset($_POST['updatebutton']))
             {
                 $user = unserialize($_SESSION['usertable']);
                 $user->id = trim($_POST['id']);
                 $user->name = !empty(trim($_POST['name'])) ? trim($_POST['name']) : $user->name;
                 $user->surname = trim($_POST['surname']);
-                $user->age = trim($_POST['age']);                    
+                $user->age = trim($_POST['age']);
 
                 $result = $this->userModel->putUser($user);
                 if (empty($result))
-                {			
+                {
                     $_SESSION['usertable'] = serialize($user);
                     echo "Error: User could not be updated.";
                     $this->pageRedirect("../View/update.php");
@@ -128,7 +128,7 @@
                     $user->surname = $result->surname;
                     $user->age = $result->age;
                 }
-                
+
                 $_SESSION["usertable"] = serialize($user);
                 $this->pageRedirect('../View/update.php');
             }
@@ -136,7 +136,7 @@
 
         public function delete()
 		{
-            if (isset($_GET['id'])) 
+            if (isset($_GET['id']))
             {
                 $id=$_GET['id'];
                 $res = $this->userModel->deleteUser($id);

@@ -1,5 +1,5 @@
 <?php
-	
+
 	class UserModel
 	{
         private $url;
@@ -15,7 +15,7 @@
                 "Connection: keep-alive",
             );
 		}
-        
+
         public function getAllUsers()
 		{
             $curlSession = curl_init($this->url);
@@ -74,7 +74,7 @@
                 );
 
                 curl_setopt_array($curlSession, $options);
-                
+
                 $content = curl_exec($curlSession);
 
                 curl_close($curlSession);
@@ -111,7 +111,7 @@
         }
 
 		public function deleteUser($id)
-		{	
+		{
             $curlSession = curl_init($this->url . "/" . $id);
 
             $options = array(

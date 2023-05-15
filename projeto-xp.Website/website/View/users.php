@@ -22,7 +22,7 @@
         </style>
         <script type="text/javascript">
         $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();   
+            $('[data-toggle="tooltip"]').tooltip();
         });
         </script>
     </head>
@@ -41,7 +41,7 @@
                             $i = 0;
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
-                                    echo "<tr>";                                       
+                                    echo "<tr>";
                                         echo "<th>Id</th>";
                                         echo "<th>Name</th>";
                                         echo "<th>Surname</th>";
@@ -53,7 +53,7 @@
                                 echo "<tbody>";
                                 while($i < count($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $result[$i]["id"] . "</td>";                                        
+                                        echo "<td>" . $result[$i]["id"] . "</td>";
                                         echo "<td>" . $result[$i]['name'] . "</td>";
                                         echo "<td>" . $result[$i]['surname'] . "</td>";
                                         echo "<td>" . $result[$i]['age'] . "</td>";
@@ -65,7 +65,7 @@
                                     echo "</tr>";
                                     $i++;
                                 }
-                                echo "</tbody>";                            
+                                echo "</tbody>";
                             echo "</table>";
                         } else{
                             echo "<center><p class='lead'><em>No registered users yet. Use the \"Create User\" button to register a new one.</em></p></center>";

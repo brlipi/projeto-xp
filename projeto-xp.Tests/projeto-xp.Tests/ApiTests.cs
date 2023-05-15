@@ -201,7 +201,7 @@ namespace projeto_xp.Tests
 
             /// Assert
             repositoryMock.Verify(r => r.AddUser(It.IsAny<UserItemCreate>()));
-            
+
             var objectResult = Assert.IsType<CreatedAtActionResult>(actionResult.Result);
             var userItem = Assert.IsType<UserItemCreate>(objectResult.Value);
 
@@ -642,7 +642,7 @@ namespace projeto_xp.Tests
             /// Assert
             repositoryMock.Verify(r => r.DeleteUser(It.IsAny<UserItemCreate>()));
 
-            var objectResult = Assert.IsType<NoContentResult>(actionResult);            
+            var objectResult = Assert.IsType<NoContentResult>(actionResult);
         }
         [Fact]
         public async Task DeleteUserItemNoId()

@@ -1,7 +1,7 @@
 <?php
-        require '../Models/User.php'; 
-        session_start();             
-        $userTable=isset($_SESSION['usertable'])?unserialize($_SESSION['usertable']):new User();            
+        require '../Models/User.php';
+        session_start();
+        $userTable=isset($_SESSION['usertable'])?unserialize($_SESSION['usertable']):new User();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +44,7 @@
                         <a href="../public/index.php" class="btn btn-default">Cancel</a>
                     </form>
                 </div>
-            </div>        
+            </div>
         </div>
     </div>
 </body>
