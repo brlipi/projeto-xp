@@ -20,9 +20,10 @@
 - O banco de dados pode ser acessado pelo SSMS pelo nome "localhost\SQLEXPRESS".
 
 ## Inicialização do projeto em contêineres (docker-compose)
-  1. Vá para o diretório ```projeto-xp/projeto-xp.Api/projeto-xp.Api/```.
-  2. Digite ```docker-compose up --build```.
-  3. Para acessar os contêineres, use o comando ```docker exec -it bash <container_name>``` (container_name para cada um dos contêineres pode ser encontrado no arquivo docker-compose.yml).
+  1. Copie o arquivo `.env.example` em um novo arquivo chamado `.env` e crie uma senha para o banco de dados.
+  2. Vá para o diretório ```projeto-xp/projeto-xp.Api/projeto-xp.Api/```.
+  3. Digite ```docker-compose up --build```.
+  4. Para acessar os contêineres, use o comando ```docker exec -it bash <container_name>``` (container_name para cada um dos contêineres pode ser encontrado no arquivo docker-compose.yml).
 
 ## Testes unitários
 - Via Visual Studio:
